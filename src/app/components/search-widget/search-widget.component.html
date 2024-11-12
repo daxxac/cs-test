@@ -1,0 +1,59 @@
+<div class="search-widget mat-elevation-z4" cdkDragBoundary="body" cdkDrag>
+  <div class="search-controls">
+    <mat-form-field appearance="outline">
+      <mat-label>Category</mat-label>
+      <mat-select [(ngModel)]="selectedType" (selectionChange)="onSearch()">
+        <mat-option value="all">All</mat-option>
+        <mat-option *ngFor="let type of searchTypes" [value]="type">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Search</mat-label>
+      <input matInput [(ngModel)]="searchText" (keyup)="onSearch()" placeholder="Search...">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <div class="search-results" *ngIf="searchState$ | async as state">
+    <!-- Level 1: Type -->
+    <div class="type-group" *ngFor="let group of state.results; trackBy: trackByType">
+      <div class="type-header" (click)="toggleType(group.type)">
+        <mat-icon>{{ isTypeExpanded(group.type) ? 'expand_more' : 'chevron_right' }}</mat-icon>
+        <mat-icon>{{ getTypeIcon(group.type) }}</mat-icon>
+        <span>{{ group.type }}</span>
+      </div>
+
+      <!-- Level 2: Subtype -->
+      <div class="type-content" *ngIf="isTypeExpanded(group.type)">
+        <div class="subtype-group"
+             *ngFor="let subtypeGroup of groupBySubtype(group.results); trackBy: trackBySubtype">
+          <div class="subtype-header" (click)="toggleSubtype(subtypeGroup.subtype)">
+            <mat-icon>{{ isSubtypeExpanded(subtypeGroup.subtype) ? 'expand_more' : 'chevron_right' }}</mat-icon>
+            <mat-icon>{{ getTypeIcon(group.type) }}</mat-icon>
+            <span>{{ subtypeGroup.subtype }}</span>
+          </div>
+
+          <!-- Level 3: Objects -->
+          <div class="subtype-content" *ngIf="isSubtypeExpanded(subtypeGroup.subtype)">
+            <div class="search-result-item" *ngFor="let result of subtypeGroup.items; trackBy: trackByResult">
+              <div class="item-content">
+                <mat-icon>{{ result.icon }}</mat-icon>
+                <span class="item-name">{{ result.name }}</span>
+                <span *ngIf="result.connectionStatus"
+                      class="connection-status"
+                      [ngClass]="getConnectionStatusClass(result.connectionStatus)">
+                  {{ result.connectionStatus }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="resize-handle"></div>
+</div>

@@ -1,27 +1,34 @@
-# Test
+### 1. What plugins/extensions did you use? Briefly explain why.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.3.
+It is written with Angular 18 and mostly @angular/material
+components just not to waste too much time on styling.
+Angular CDK was necessary for implementing the drag-and-drop
+functionality and handling user interactions. RxJS was used for
+managing data streams and component communication, which is
+essential for search functionality and state management.
 
-## Development server
+### 2. How would you implement multilingual support for the types and names?
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+I would use ngx-translate for multilingual support which I used to implement :)
 
-## Code scaffolding
+P.S. One of the last projects I was working on was supposed to support EN and hebrew
+and I was surprised how easy it was to implement right-to-left support with Angular Material. :D
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### 3. How would you handle data in different formats (e.g., PascalCase vs camelCase)?
 
-## Build
+I would create a data transformer service that converts incoming data
+from the server's format to the client's format, for example.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### 4. Create a flowchart describing how the widget works.
 
-## Running unit tests
+I am not good at drawing flowcharts but still...
+![](./img.png)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 5. How would you mock the data if the server isn't ready?
 
-## Running end-to-end tests
+Hm, I didn't read questions before I finished the task.
+I would create a mock service that returns hardcoded data in the same 
+format that the real API would use. This service would be implemented using
+Angular's HTTP interceptors, which can intercept API calls and return mock data instead.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+And I didn't think about mocking a lot while implementing the task. :D So it is just simply inside the service.
